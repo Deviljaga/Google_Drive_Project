@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DriveSpace — My Drive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+<a class="brand" href="#"><span class="brand-mark"><i></i><i></i><i></i></span><span>Drive<span class="brand-light">Space</span></span></a>
+<button class="new-button" id="newButton"><b>＋</b> New <span>⌄</span></button><input type="file" id="fileInput" hidden multiple>
+<nav class="main-nav">
+<button class="nav-item active" data-view="drive"><span>▦</span> My Drive</button>
+<button class="nav-item" data-view="shared"><span>♧</span> Shared with me</button>
+<button class="nav-item" data-view="recent"><span>◷</span> Recent</button>
+<button class="nav-item" data-view="starred"><span>☆</span> Starred</button>
+<button class="nav-item" data-view="trash"><span>▤</span> Trash <small id="trashCount">0</small></button>
+</nav>
+<div class="sidebar-divider"></div>
+<div class="storage-heading"><span>Storage</span><b id="storagePercent">0%</b></div>
+<div class="storage-track"><span id="storageBar"></span></div>
+<p class="storage-caption" id="storageCaption">Calculating storage…</p>
+<button class="upgrade-button" id="storageInfo">Storage details <span>↗</span></button>
+<div class="sidebar-bottom"><div class="help-icon">?</div><div><strong>Need a hand?</strong><small>Your files, organized.</small></div></div>
+</aside>
+<main class="main-area">
+<header class="topbar">
+<button class="mobile-menu" id="mobileMenu">☰</button>
+<div class="search-wrap"><span class="search-icon">⌕</span><input id="searchInput" type="search" placeholder="Search in Drive"><kbd>⌘ K</kbd></div>
+<div class="top-actions"><button class="icon-button" id="refreshButton" title="Refresh">↻</button><button class="icon-button notification-button" title="Notifications">♧<i></i></button><div class="avatar">J</div></div>
+</header>
+<section class="content">
+<div class="welcome-row"><div><div class="eyebrow"><span></span> YOUR WORKSPACE</div><h1 id="pageTitle">My Drive<span class="title-dot">.</span></h1><p class="subtitle" id="pageSubtitle">Everything you need, right where you need it.</p></div><button class="primary-button" id="uploadTopButton">＋ Upload files</button></div>
+<div class="stats-grid">
+<article class="stat-card"><div class="stat-top"><span class="stat-icon purple">▧</span><span class="stat-label">TOTAL FILES</span></div><div class="stat-value" id="totalFiles">—</div><div class="stat-foot">● In your workspace</div></article>
+<article class="stat-card"><div class="stat-top"><span class="stat-icon blue">⇧</span><span class="stat-label">STORAGE USED</span></div><div class="stat-value" id="totalStorage">—</div><div class="stat-foot" id="storageFoot">Across all files</div></article>
+<article class="stat-card"><div class="stat-top"><span class="stat-icon green">↻</span><span class="stat-label">LAST ACTIVITY</span></div><div class="stat-value activity-value" id="lastActivity">Today</div><div class="stat-foot">Keep your work moving</div></article>
+</div>
+<section class="upload-panel" id="dropZone"><div class="upload-illustration"><span class="cloud">☁</span><span class="upload-arrow">↑</span></div><div class="upload-copy"><h2>Bring your files together</h2><p>Drag and drop files here, or <button class="text-button" id="browseButton">browse your computer</button></p><small>Upload documents, images, PDFs and more</small></div><div class="upload-decoration"></div></section>
+<div class="files-toolbar"><div><h2 id="filesHeading">Your files <span id="visibleCount">0</span></h2><p id="listDescription">All your important stuff in one place.</p></div><div class="view-actions"><select id="sortSelect"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="name">Name A–Z</option><option value="size">Largest first</option></select><div class="view-toggle"><button class="view-button active" id="listViewButton">☷</button><button class="view-button" id="gridViewButton">▦</button></div></div></div>
+<div class="table-card" id="tableCard"><div class="table-header"><span>NAME ↕</span><span>OWNER</span><span>LAST MODIFIED</span><span>FILE SIZE</span><span></span></div><div id="fileList" class="file-list"><div class="loading-state"><div class="spinner"></div>Loading your files…</div></div><div class="empty-state hidden" id="emptyState"><div class="empty-art">▱</div><h3>No files here yet</h3><p>Upload your first file and it will show up here.</p><button class="primary-button" id="emptyUploadButton">＋ Upload a file</button></div></div>
+<footer class="footer"><span>DriveSpace <span id="year"></span></span><span>Made for a more organized day <b>✳</b></span></footer>
+</section></main></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<dialog class="modal" id="shareModal"><form method="dialog" class="modal-card" id="shareForm"><button class="modal-close" type="button" id="closeShareModal">×</button><div class="modal-icon">↗</div><h2>Share file</h2><p class="modal-subtitle" id="shareFileName">Choose who can access this file.</p><label for="shareEmail">Email address</label><input id="shareEmail" type="email" placeholder="name@example.com" required><label for="sharePermission">Permission</label><select id="sharePermission"><option value="VIEW">Viewer</option><option value="EDIT">Editor</option></select><div class="modal-actions"><button class="secondary-button" type="button" id="cancelShare">Cancel</button><button class="primary-button" type="submit">Create share</button></div><p class="modal-note">Sharing requires the Sharing Service to be running.</p></form></dialog>
+<dialog class="modal" id="detailsModal"><div class="modal-card"><button class="modal-close" type="button" id="closeDetailsModal">×</button><div class="modal-icon">▧</div><h2>File details</h2><div id="detailsContent"></div><div class="modal-actions"><button class="primary-button" id="closeDetailsButton">Done</button></div></div></dialog>
+<script src="script.js"></script>
+</body></html>
